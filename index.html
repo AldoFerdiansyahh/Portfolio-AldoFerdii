@@ -6,670 +6,498 @@
     <title>Aldo Ferdiansyah | Creative Technologist</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     
     <style>
-        /* === CSS Reset & Global Styles === */
+        /* === VARIABLES & RESET === */
         :root {
-            --bg-color: #121212;
-            --card-color: #1E1E1E;
-            --primary-color: #00A3FF;
-            --primary-glow: rgba(0, 163, 255, 0.5);
-            --text-color: #E0E0E0;
-            --heading-color: #FFFFFF;
-            --border-color: rgba(255, 255, 255, 0.1);
+            --bg-color: #0a0a0a;
+            --surface-color: rgba(255, 255, 255, 0.03);
+            --surface-hover: rgba(255, 255, 255, 0.08);
+            --primary-gradient: linear-gradient(135deg, #00C6FF 0%, #0072FF 100%);
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --border-light: rgba(255, 255, 255, 0.08);
+            --blur-val: 20px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Lato', sans-serif;
+            font-family: 'Poppins', sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
+            color: var(--text-main);
+            line-height: 1.7;
             overflow-x: hidden;
-            cursor: none; /* Sembunyikan kursor default di semua layar */
+            cursor: none;
         }
 
-        /* Efek Aurora Background */
-        body::before {
-            content: '';
+        /* === BACKGROUND EFFECTS === */
+        body::after {
+            content: "";
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            pointer-events: none;
             z-index: -1;
-            background: 
-                radial-gradient(circle at 15% 25%, var(--primary-glow), transparent 40%),
-                radial-gradient(circle at 85% 75%, rgba(100, 0, 255, 0.3), transparent 40%);
-            animation: aurora 15s linear infinite;
         }
 
-        @keyframes aurora {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        h1, h2, h3 {
-            font-family: 'Poppins', sans-serif;
-            color: var(--heading-color);
-            font-weight: 600;
-        }
-        
-        .container {
-            width: 90%;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 100px 0;
-        }
-
-        section {
-            border-bottom: 1px solid var(--border-color);
-            position: relative;
-        }
-        section:last-of-type { border-bottom: none; }
-
-        /* === Animasi Reveal saat Scroll === */
-        .reveal {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* === Navigation Bar === */
-        .navbar {
-            background-color: rgba(26, 26, 26, 0.5);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+        .ambient-light {
             position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            padding: 15px 5%;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .nav-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.8rem;
-            color: var(--heading-color);
-            text-decoration: none;
-            font-weight: 700;
-        }
-        .logo span { color: var(--primary-color); }
-
-        .nav-links { list-style: none; display: flex; gap: 30px; }
-        .nav-links a {
-            color: var(--text-color);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-            position: relative;
-        }
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--primary-color);
-            transition: width 0.3s ease;
-        }
-        .nav-links a:hover, .nav-links a.active { color: var(--heading-color); }
-        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
-
-        /* Mobile Menu (Hamburger) */
-        .hamburger { display: none; cursor: pointer; }
-        .hamburger div {
-            width: 25px; height: 3px;
-            background-color: var(--heading-color);
-            margin: 5px 0;
-            transition: all 0.3s ease;
-        }
-
-        /* === Hero Section === */
-        #hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            text-align: center;
-            min-height: 600px;
-        }
-        .hero-content { max-width: 800px; margin: 0 auto; }
-        #hero h1 {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-        #hero .subtitle {
-            font-size: clamp(1.2rem, 3vw, 1.8rem);
-            color: var(--primary-color);
-            margin: 15px 0 35px;
-            font-family: 'Poppins', sans-serif;
-            min-height: 50px;
-        }
-        .cta-button {
-            display: inline-block;
-            background-color: var(--primary-color);
-            color: #fff;
-            padding: 14px 30px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            margin: 5px 10px;
-            border: 2px solid var(--primary-color);
-        }
-        .cta-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 163, 255, 0.2);
-        }
-        .cta-button.secondary {
-            background-color: transparent;
-            color: var(--primary-color);
-        }
-        .cta-button.secondary:hover {
-            background-color: var(--primary-color);
-            color: #fff;
-        }
-
-        /* === About Section === */
-        .about-content { display: flex; align-items: center; gap: 50px; }
-        .about-image { flex: 0 0 300px; position: relative; }
-        .about-image img {
-            width: 100%; border-radius: 50%;
-            border: 5px solid var(--card-color);
-            transition: transform 0.3s ease;
-        }
-        .about-image:hover img { transform: scale(1.05); }
-        .about-text { flex: 1; }
-        .about-text h2 { margin-bottom: 20px; font-size: 2.5rem; }
-
-        /* === Skills Section === */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-        }
-        .skill-card {
-            background-color: var(--card-color);
-            padding: 40px 30px;
-            border-radius: 12px;
-            border: 1px solid transparent;
-            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        .skill-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary-color);
-            box-shadow: 0 10px 30px var(--primary-glow);
-        }
-        .skill-card h3 {
-            color: var(--primary-color);
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .skill-card ul { list-style-type: none; }
-        .skill-card li {
-            margin-bottom: 12px;
-            position: relative;
-            padding-left: 20px;
-        }
-        .skill-card li::before {
-            content: '\f058';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            color: var(--primary-color);
-            position: absolute;
-            left: 0;
-            top: 2px;
-        }
-
-        /* === Projects Section === */
-        .project-filters { text-align: center; margin-bottom: 40px; }
-        .filter-btn {
-            background: none;
-            border: 1px solid var(--primary-color);
-            color: var(--primary-color);
-            padding: 10px 25px;
-            margin: 0 8px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-        }
-        .filter-btn.active, .filter-btn:hover {
-            background: var(--primary-color);
-            color: #fff;
-            box-shadow: 0 5px 15px rgba(0, 163, 255, 0.2);
-        }
-        
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-        }
-        .project-card {
-            background: var(--card-color);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid var(--border-color);
-            display: block;
-        }
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
-        }
-        .project-image {
-            width: 100%; height: 220px;
-            overflow: hidden;
-        }
-        .project-image img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            transition: transform 0.4s ease;
-        }
-        .project-card:hover .project-image img { transform: scale(1.1); }
-        .project-info { padding: 25px; }
-        .project-info h3 { margin-bottom: 10px; font-size: 1.4rem; }
-        .project-info p { font-size: 0.95rem; }
-
-        /* === Contact Section === */
-        .contact-form { max-width: 700px; margin: 50px auto 0; text-align: center; }
-        .form-group { margin-bottom: 20px; text-align: left; }
-        .form-group input, .form-group textarea {
-            width: 100%; padding: 15px;
-            border-radius: 8px; border: 1px solid var(--border-color);
-            background: var(--card-color);
-            color: var(--text-color);
-            font-size: 1rem;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        .form-group input:focus, .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 10px var(--primary-glow);
-        }
-        
-        /* === Footer === */
-        footer {
-            background: var(--card-color);
-            color: var(--text-color);
-            text-align: center;
-            padding: 40px 20px;
-            margin-top: 50px;
-        }
-        .social-links {
-            margin-bottom: 20px;
-        }
-        .social-links a {
-            color: var(--text-color);
-            font-size: 1.8rem;
-            margin: 0 15px;
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-        .social-links a:hover {
-            color: var(--primary-color);
-            transform: translateY(-5px);
-        }
-        .footer-text p {
-            font-size: 0.9rem;
-        }
-
-        /* === Kursor Kustom === */
-        .cursor {
-            width: 25px; 
-            height: 25px;
-            border: 2px solid var(--primary-color);
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(0, 114, 255, 0.15) 0%, transparent 70%);
             border-radius: 50%;
-            position: fixed;
-            z-index: 1001;
-            pointer-events: none; /* Penting agar bisa klik menembus kursor */
-            transform: translate(-50%, -50%); /* Posisi tepat di tengah pointer */
-            transition: transform 0.2s ease-out, background-color 0.2s ease;
+            z-index: -2;
+            animation: floatLight 10s infinite alternate ease-in-out;
         }
-        .cursor.grow {
-            transform: translate(-50%, -50%) scale(2.5);
-            background: var(--primary-glow);
-            border-color: transparent;
-        }
-        
-        /* === Media Queries for Responsiveness === */
-        @media (max-width: 992px) {
-            .about-content { flex-direction: column; text-align: center; }
-            .about-image { margin-bottom: 30px; flex-basis: auto; width: 250px; }
+        .light-1 { top: -10%; left: -10%; }
+        .light-2 { bottom: -10%; right: -10%; background: radial-gradient(circle, rgba(0, 198, 255, 0.1) 0%, transparent 70%); animation-delay: 2s; }
+
+        @keyframes floatLight {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
         }
 
-        @media (max-width: 768px) {
+        /* === UTILS === */
+        h1, h2, h3 { font-weight: 700; letter-spacing: -0.02em; }
+        .gradient-text {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+        .text-muted { color: var(--text-muted); font-weight: 300; }
+
+        .container {
+            width: 88%; max-width: 1200px;
+            margin: 0 auto; padding: 120px 0;
+        }
+
+        /* === NAVBAR === */
+        .navbar {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            width: auto; z-index: 1000; padding: 12px 30px;
+            border-radius: 50px;
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(var(--blur-val));
+            -webkit-backdrop-filter: blur(var(--blur-val));
+            border: 1px solid var(--border-light);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .nav-content { display: flex; align-items: center; gap: 40px; }
+        .logo { font-weight: 800; font-size: 1.2rem; color: #fff; text-decoration: none; }
+        .nav-links { display: flex; list-style: none; gap: 25px; }
+        .nav-links a {
+            color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500;
+            transition: all 0.3s ease; position: relative;
+        }
+        .nav-links a:hover, .nav-links a.active { color: #fff; }
+        .nav-links a.active::after {
+            content: ''; position: absolute; bottom: -4px; left: 50%;
+            transform: translateX(-50%); width: 4px; height: 4px;
+            background: #00C6FF; border-radius: 50%;
+        }
+        .hamburger { display: none; cursor: pointer; color: #fff; }
+
+        /* === HERO === */
+        #hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; }
+        .hero-title { font-size: clamp(3rem, 8vw, 6rem); font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
+        .hero-subtitle { font-size: clamp(1.1rem, 2vw, 1.5rem); color: var(--text-muted); margin-bottom: 40px; font-weight: 300; height: 30px; }
+        
+        .btn {
+            padding: 16px 32px; border-radius: 50px; font-weight: 600; font-size: 0.95rem;
+            text-decoration: none; transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            position: relative; overflow: hidden; z-index: 1; display: inline-block; margin: 5px;
+        }
+        .btn-primary { background: var(--text-main); color: #000; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(255, 255, 255, 0.15); }
+        .btn-outline { background: transparent; color: var(--text-main); border: 1px solid rgba(255,255,255,0.2); }
+        .btn-outline:hover { border-color: #fff; background: rgba(255,255,255,0.05); }
+
+        /* === CARDS === */
+        .glass-card {
+            background: var(--surface-color); backdrop-filter: blur(10px);
+            border: 1px solid var(--border-light); border-radius: 20px;
+            padding: 40px; transition: all 0.4s ease;
+        }
+        .glass-card:hover {
+            background: var(--surface-hover); transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.2); box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        /* === ABOUT & SKILLS === */
+        .about-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 60px; align-items: center; }
+        .about-img-wrapper img { width: 100%; border-radius: 20px; filter: grayscale(100%); transition: 0.5s; }
+        .about-img-wrapper:hover img { filter: grayscale(0%); }
+        
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-top: 50px; }
+        .skill-list li { list-style: none; color: var(--text-muted); margin-bottom: 10px; padding-left: 15px; position: relative; }
+        .skill-list li::before { content: ''; position: absolute; left: 0; top: 10px; width: 4px; height: 4px; background: #00C6FF; border-radius: 50%; }
+
+        /* === PROJECTS === */
+        .filter-container { display: flex; justify-content: center; gap: 15px; margin-bottom: 50px; }
+        .filter-btn {
+            background: transparent; border: none; color: var(--text-muted); cursor: pointer;
+            font-family: 'Poppins', sans-serif; font-weight: 500; padding: 8px 16px;
+            border-radius: 20px; transition: 0.3s;
+        }
+        .filter-btn.active, .filter-btn:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
+
+        .project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px; }
+        .project-card { padding: 0; overflow: hidden; display: flex; flex-direction: column; height: 100%; }
+        
+        .project-thumb { width: 100%; height: 240px; overflow: hidden; }
+        .project-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .project-card:hover .project-thumb img { transform: scale(1.1); }
+        
+        .project-details { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
+        .project-meta { margin-top: auto; padding-top: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .project-link { color: #fff; font-size: 1.2rem; transition: 0.3s; }
+        .project-link:hover { color: #00C6FF; }
+
+        /* === FORM & FOOTER === */
+        .form-input {
+            width: 100%; padding: 18px; margin-bottom: 20px; background: var(--surface-color);
+            border: 1px solid var(--border-light); border-radius: 12px; color: #fff; font-family: 'Poppins', sans-serif;
+        }
+        .form-input:focus { outline: none; border-color: #00C6FF; background: var(--surface-hover); }
+        
+        footer { border-top: 1px solid var(--border-light); padding: 50px 0; text-align: center; margin-top: 50px; }
+        .social-icons a { color: var(--text-muted); font-size: 1.5rem; margin: 0 15px; transition: 0.3s; }
+        .social-icons a:hover { color: #fff; transform: translateY(-3px); }
+
+        /* === CURSOR === */
+        .cursor-dot { width: 8px; height: 8px; background: #fff; border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; mix-blend-mode: difference; }
+        .cursor-outline { width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.5); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transition: all 0.2s ease-out; transform: translate(-50%, -50%); }
+
+        @media (max-width: 900px) {
+            .about-grid { grid-template-columns: 1fr; }
+            .navbar { top: 0; left: 0; transform: none; width: 100%; border-radius: 0; padding: 20px 5%; }
+            .nav-content { justify-content: space-between; }
             .nav-links {
-                position: fixed;
-                top: 71px;
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 71px);
-                background-color: var(--bg-color);
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                gap: 40px;
-                transition: left 0.4s ease-in-out;
+                position: fixed; top: 70px; left: 0; width: 100%; background: #0a0a0a; flex-direction: column;
+                padding: 40px; transform: translateY(-150%); transition: 0.4s; border-bottom: 1px solid var(--border-light);
             }
-            .nav-links.active { left: 0; }
-            .hamburger { display: block; }
-            .hamburger.active .bar1 { transform: rotate(-45deg) translate(-5px, 6px); }
-            .hamburger.active .bar2 { opacity: 0; }
-            .hamburger.active .bar3 { transform: rotate(45deg) translate(-5px, -6px); }
-            .cta-button { padding: 12px 25px; }
+            .nav-links.active { transform: translateY(0); }
+            .hamburger { display: block; font-size: 1.5rem; }
+            .project-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <div class="cursor"></div>
+
+    <div class="ambient-light light-1"></div>
+    <div class="ambient-light light-2"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
 
     <nav class="navbar">
         <div class="nav-content">
-            <a href="#hero" class="logo">AldoFerdii<span>.</span></a>
+            <a href="#hero" class="logo">Aldo<span class="gradient-text">Ferdii.</span></a>
             <ul class="nav-links">
-                <li><a href="#hero" class="nav-link">Beranda</a></li>
-                <li><a href="#about" class="nav-link">Tentang</a></li>
-                <li><a href="#skills" class="nav-link">Keahlian</a></li>
-                <li><a href="#projects" class="nav-link">Proyek</a></li>
-                <li><a href="#contact" class="nav-link">Kontak</a></li>
+                <li><a href="#hero" class="active">Beranda</a></li>
+                <li><a href="#about">Tentang</a></li>
+                <li><a href="#skills">Keahlian</a></li>
+                <li><a href="#projects">Proyek</a></li>
+                <li><a href="#contact">Kontak</a></li>
             </ul>
-            <div class="hamburger">
-                <div class="bar1"></div>
-                <div class="bar2"></div>
-                <div class="bar3"></div>
-            </div>
+            <div class="hamburger"><i class="fas fa-bars"></i></div>
         </div>
     </nav>
 
-    <main>
-        <section id="hero">
-            <div class="container hero-content reveal">
-                <h1>ALDO FERDIANSYAH</h1>
-                <p class="subtitle" id="subtitle-text"></p>
-                <a href="#projects" class="cta-button">Lihat Proyek Saya</a>
-                <a href="#contact" class="cta-button secondary">Hubungi Saya</a>
+    <section id="hero">
+        <div class="container">
+            <h1 class="hero-title">Hello, I'm <br><span class="gradient-text">Aldo Ferdiansyah</span></h1>
+            <p class="hero-subtitle" id="typewriter"></p>
+            <div class="btn-group">
+                <a href="#projects" class="btn btn-primary">Lihat Proyek</a>
+                <a href="#contact" class="btn btn-outline">Hubungi Saya</a>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="about">
-            <div class="container about-content reveal">
-                <div class="about-image">
-                    <img src="image/aldo.jpg" alt="Foto Aldo Ferdiansyah">
-                </div>
-                <div class="about-text">
-                    <h2>Tentang Saya</h2>
-                    <p>Mahasiswa Informatika semester 5 di Institut Digital Ekonomi LPKIA dengan minat tinggi pada pengembangan teknologi, jaringan komputer, dan desain antarmuka pengguna. Terampil dalam fundamental pengembangan web, jaringan, dan desain, yang dilengkapi dengan kemampuan komunikasi dan kepemimpinan yang kuat.</p>
-                    <p>Aktif di organisasi dan memiliki pengalaman magang, saya adalah seorang pembelajar yang cepat, adaptif, dan siap memberikan kontribusi signifikan dalam tim.</p>
-                </div>
+    <section id="about">
+        <div class="container about-grid">
+            <div class="about-img-wrapper reveal">
+                <img src="image/aldo.jpg" alt="Aldo Ferdiansyah">
             </div>
-        </section>
-
-        <section id="skills">
-            <div class="container reveal">
-                <h2 style="text-align: center;">Keahlian Utama</h2>
-                <div class="skills-grid">
-                    <div class="skill-card">
-                        <h3><i class="fas fa-code"></i> Pengembangan Web</h3>
-                        <ul>
-                            <li>PHP & Laravel</li>
-                            <li>HTML & CSS</li>
-                            <li>JavaScript</li>
-                            <li>MySQL</li>
-                            <li>WordPress</li>
-                        </ul>
-                    </div>
-                    <div class="skill-card">
-                        <h3><i class="fas fa-network-wired"></i> Jaringan Komputer</h3>
-                        <ul>
-                            <li>Konsep TCP/IP</li>
-                            <li>IP Addressing & Subnetting</li>
-                            <li>Konfigurasi Dasar Router & Switch</li>
-                            <li>Troubleshooting Konektivitas</li>
-                            <li>Simulasi Jaringan (GNS3)</li>
-                        </ul>
-                    </div>
-                    <div class="skill-card">
-                        <h3><i class="fas fa-palette"></i> Desain & Konten</h3>
-                        <ul>
-                            <li>Canva & Figma</li>
-                            <li>Desain Antarmuka (UI)</li>
-                            <li>Content Creation (YouTube)</li>
-                            <li>Fotografi Dasar</li>
-                            <li>Dasar-dasar UX</li>
-                        </ul>
-                    </div>
+            <div class="about-text reveal">
+                <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Tentang <span class="gradient-text">Saya</span></h2>
+                <p class="text-muted" style="margin-bottom: 1.5rem; font-size: 1.1rem;">
+                    Mahasiswa Informatika di Institut Digital Ekonomi LPKIA dengan IPK 3.90 yang memiliki passion kuat dalam membangun solusi digital. Saya memadukan logika *Back-End* (Laravel/PHP) dengan estetika *Front-End* untuk menciptakan aplikasi yang fungsional dan indah.
+                </p>
+                <p class="text-muted">
+                    Aktif sebagai koordinator organisasi BEM dan memiliki pengalaman dalam manajemen proyek. Saya percaya bahwa teknologi harus memudahkan, bukan membingungkan.
+                </p>
+                <div style="margin-top: 30px; display: flex; gap: 40px;">
+                    <div><h3 class="gradient-text" style="font-size: 2rem;">3+</h3><p class="text-muted">Tahun Koding</p></div>
+                    <div><h3 class="gradient-text" style="font-size: 2rem;">10+</h3><p class="text-muted">Proyek Selesai</p></div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="projects">
-            <div class="container reveal">
-                <h2 style="text-align: center;">Portofolio Proyek</h2>
-                <div class="project-filters">
-                    <button class="filter-btn active" data-filter="all">Semua</button>
-                    <button class="filter-btn" data-filter="web">Web</button>
-                    <button class="filter-btn" data-filter="desain">Creative</button>
+    <section id="skills">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 10px; font-size: 2.5rem;">Keahlian <span class="gradient-text">Utama</span></h2>
+            <p class="text-muted" style="text-align: center; margin-bottom: 50px;">Teknologi yang saya gunakan untuk membangun masa depan.</p>
+            
+            <div class="skills-grid reveal">
+                <div class="glass-card skill-card">
+                    <h3><i class="fas fa-code"></i> Web Development</h3>
+                    <ul class="skill-list">
+                        <li>Laravel Framework (PHP)</li>
+                        <li>Tailwind & Bootstrap</li>
+                        <li>MySQL Database</li>
+                        <li>HTML5, CSS3, JavaScript</li>
+                        <li>RESTful API Integration</li>
+                    </ul>
                 </div>
-                <div class="project-grid">
-                    <div class="project-card" data-category="web">
-                        <div class="project-image"><img src="image/rentalmobil.png" alt="RentalMobilKu"></div>
-                        <div class="project-info">
-                            <a href="https://github.com/AldoFerdiansyahh/rentalmobilku.git" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                            <h3>Aplikasi Web "RentalMobilKu"</h3>
-                            <p>Platform manajemen rental mobil full-stack menggunakan Laravel, MySQL, dan Bootstrap.</p>
-                        </div>
-                    </div>
-                    <div class="project-card" data-category="web">
-                        <div class="project-image"><img src="image/girilaya1.png" alt="Girilaya Wayang Golek"></div>
-                        <div class="project-info">
-                            <a href="https://github.com/AldoFerdiansyahh/girilaya.git" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                            <h3>Website "Girilaya Wayang Golek"</h3>
-                            <p>Website profil dan galeri seni berbasis HTML, CSS, dan JavaScript yang responsif.</p>
-                        </div>
-                    </div>
-                    <div class="project-card" data-category="web">
-                        <div class="project-image"><img src="image/bg.png" alt="Ali Rent Car"></div>
-                        <div class="project-info">
-                            <a href="https://github.com/AldoFerdiansyahh/alirentcar.git" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                            <h3>ON GOING - Aplikasi berbasis Website "Ali Rent Car" </h3>
-                            <p>Web Aplikasi penyedia layanan rental mobil dan manajemen kendaraan.</p>
-                        </div>
-                    </div>
-                    <div class="project-card" data-category="desain">
-                        <div class="project-image"><img src="image/yt.png" alt="YouTube Channel"></div>
-                        <div class="project-info">
-                            <a href="https://www.youtube.com/@Aldoferdii" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                            <h3>Channel YouTube Edukasi</h3>
-                            <p>Membuat konten visual dan video untuk edukasi teknologi dan pemrograman.</p>
+                <div class="glass-card skill-card">
+                    <h3><i class="fas fa-network-wired"></i> Networking</h3>
+                    <ul class="skill-list">
+                        <li>Cisco Packet Tracer / GNS3</li>
+                        <li>IP Subnetting & Routing</li>
+                        <li>Mikrotik Configuration</li>
+                        <li>Network Troubleshooting</li>
+                    </ul>
+                </div>
+                <div class="glass-card skill-card">
+                    <h3><i class="fas fa-pen-nib"></i> Creative & Tools</h3>
+                    <ul class="skill-list">
+                        <li>UI/UX Design (Figma)</li>
+                        <li>Graphic Design (Canva/Ps)</li>
+                        <li>Content Creation</li>
+                        <li>Git & GitHub</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 40px; font-size: 2.5rem;">Portofolio <span class="gradient-text">Terpilih</span></h2>
+            
+            <div class="filter-container reveal">
+                <button class="filter-btn active" data-filter="all">Semua</button>
+                <button class="filter-btn" data-filter="web">Web App</button>
+                <button class="filter-btn" data-filter="desain">Creative</button>
+            </div>
+
+            <div class="project-grid reveal">
+                
+                <div class="glass-card project-card" data-category="web">
+                    <div class="project-thumb"><img src="image/pixa.png" alt="Pixa CV"></div>
+                    <div class="project-details">
+                        <h3>Pixa CV ATS Generator</h3>
+                        <p class="text-muted" style="margin-top: 10px; font-size: 0.9rem;">Platform SaaS pembuat CV otomatis standar ATS untuk fresh graduate.</p>
+                        <div class="project-meta">
+                            <span class="text-muted" style="font-size: 0.8rem;">Laravel • SaaS</span>
+                            <a href="#" class="project-link"><i class="fab fa-github"></i></a>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <section id="contact">
-            <div class="container reveal">
-                <h2 style="text-align:center;">Hubungi Saya</h2>
-                <div class="contact-form">
-                    <p style="margin-bottom: 30px;">Tertarik untuk berkolaborasi atau punya pertanyaan? Silakan kirim pesan.</p>
-                    <form action="#">
-                        <div class="form-group"><input type="text" name="name" placeholder="Nama Anda" required></div>
-                        <div class="form-group"><input type="email" name="email" placeholder="Email Anda" required></div>
-                        <div class="form-group"><textarea name="message" rows="5" placeholder="Pesan Anda" required></textarea></div>
-                        <button type="submit" class="cta-button">Kirim Pesan</button>
-                    </form>
+                <div class="glass-card project-card" data-category="web">
+                    <div class="project-thumb"><img src="image/curhat.png" alt="CurhatYukk"></div>
+                    <div class="project-details">
+                        <h3>CurhatYukk! Platform</h3>
+                        <p class="text-muted" style="margin-top: 10px; font-size: 0.9rem;">Aplikasi kesehatan mental untuk konsultasi psikologi yang aman dan privat.</p>
+                        <div class="project-meta">
+                            <span class="text-muted" style="font-size: 0.8rem;">Web App • Konseling</span>
+                            <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
                 </div>
+
+                <div class="glass-card project-card" data-category="web">
+                    <div class="project-thumb"><img src="image/redroot.png" alt="Red Root Profile"></div>
+                    <div class="project-details">
+                        <h3>Red Root Java Profile</h3>
+                        <p class="text-muted" style="margin-top: 10px; font-size: 0.9rem;">Website profil perusahaan herbal menampilkan branding produk organik modern.</p>
+                        <div class="project-meta">
+                            <span class="text-muted" style="font-size: 0.8rem;">Company Profile</span>
+                            <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card project-card" data-category="web">
+                    <div class="project-thumb"><img src="image/ecommerce.png" alt="Red Root Store"></div>
+                    <div class="project-details">
+                        <h3>Store Red Root Java</h3>
+                        <p class="text-muted" style="margin-top: 10px; font-size: 0.9rem;">E-commerce lengkap dengan katalog produk, keranjang, dan checkout.</p>
+                        <div class="project-meta">
+                            <span class="text-muted" style="font-size: 0.8rem;">Fullstack Laravel • Tailwind</span>
+                            <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card project-card" data-category="web">
+                    <div class="project-thumb"><img src="image/konveksi.png" alt="YN Konveksi"></div>
+                    <div class="project-details">
+                        <h3>SIMSI - YN Konveksi</h3>
+                        <p class="text-muted" style="margin-top: 10px; font-size: 0.9rem;">Dashboard manajemen produksi, stok bahan, dan pesanan konveksi terintegrasi.</p>
+                        <div class="project-meta">
+                            <span class="text-muted" style="font-size: 0.8rem;">Dashboard System Laravel</span>
+                            <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card project-card" data-category="web">
+                    <div class="project-thumb"><img src="image/presinize.png" alt="Presinize"></div>
+                    <div class="project-details">
+                        <h3>Presinize Mobile App</h3>
+                        <p class="text-muted" style="margin-top: 10px; font-size: 0.9rem;">Sistem presensi digital mahasiswa berbasis QR Code dengan framework mobile.</p>
+                        <div class="project-meta">
+                            <span class="text-muted" style="font-size: 0.8rem;">Mobile Web • PWA</span>
+                            <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card project-card" data-category="web">
+                    <div class="project-thumb"><img src="image/rentalmobil.png" alt="RentalMobilKu"></div>
+                    <div class="project-details">
+                        <h3>RentalMobilKu</h3>
+                        <p class="text-muted" style="margin-top: 10px; font-size: 0.9rem;">Sistem informasi rental mobil berbasis Laravel dengan fitur booking real-time.</p>
+                        <div class="project-meta">
+                            <span class="text-muted" style="font-size: 0.8rem;">Laravel • MySQL</span>
+                            <a href="https://github.com/AldoFerdiansyahh/rentalmobilku.git" class="project-link"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card project-card" data-category="web">
+                    <div class="project-thumb"><img src="image/bg.png" alt="Ali Rent Car"></div>
+                    <div class="project-details">
+                        <h3>Ali Rent Car</h3>
+                        <p class="text-muted" style="margin-top: 10px; font-size: 0.9rem;">Pengembangan lanjutan platform sewa kendaraan dengan payment gateway.</p>
+                        <div class="project-meta">
+                            <span class="text-muted" style="font-size: 0.8rem;">Fullstack Web</span>
+                            <a href="https://github.com/AldoFerdiansyahh/alirentcar.git" class="project-link"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card project-card" data-category="desain">
+                    <div class="project-thumb"><img src="image/yt.png" alt="Youtube Channel"></div>
+                    <div class="project-details">
+                        <h3>EduTech Channel</h3>
+                        <p class="text-muted" style="margin-top: 10px; font-size: 0.9rem;">Konten edukasi digital seputar pemrograman dan teknologi informasi.</p>
+                        <div class="project-meta">
+                            <span class="text-muted" style="font-size: 0.8rem;">Content Creator</span>
+                            <a href="https://www.youtube.com/@Aldoferdii" class="project-link"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <div class="contact-wrapper reveal">
+                <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Mari <span class="gradient-text">Berkolaborasi</span></h2>
+                <p class="text-muted" style="margin-bottom: 40px;">Punya ide proyek menarik atau ingin diskusi seputar teknologi? Kirimkan pesan di sini.</p>
+                <form action="#">
+                    <input type="text" class="form-input" placeholder="Nama Lengkap" required>
+                    <input type="email" class="form-input" placeholder="Alamat Email" required>
+                    <textarea rows="5" class="form-input" placeholder="Ceritakan ide Anda..." required></textarea>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; border: none; cursor: pointer;">Kirim Pesan</button>
+                </form>
+            </div>
+        </div>
+    </section>
 
     <footer>
-        <div class="social-links">
-            <a href="https://linkedin.com/in/aldo-ferdii" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-            <a href="https://github.com/AldoFerdiansyahh" aria-label="GitHub"><i class="fab fa-github"></i></a>
-            <a href="https://www.instagram.com/aldoferdii" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.youtube.com/@Aldoferdii" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        <div class="social-icons">
+            <a href="https://linkedin.com/in/aldo-ferdii"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/AldoFerdiansyahh"><i class="fab fa-github"></i></a>
+            <a href="https://www.instagram.com/aldoferdii"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@Aldoferdii"><i class="fab fa-youtube"></i></a>
         </div>
-        <div class="footer-text">
-            <p>&copy; 2025 Aldo Ferdiansyah.</p>
-        </div>
+        <p class="text-muted" style="margin-top: 20px; font-size: 0.85rem;">&copy; 2026 Aldo Ferdiansyah. Crafted with <i class="fas fa-heart" style="color: #e31b23;"></i> & Logic.</p>
     </footer>
 
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
+        // === CUSTOM CURSOR ===
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX; const posY = e.clientY;
+            cursorDot.style.left = `${posX}px`; cursorDot.style.top = `${posY}px`;
+            cursorOutline.style.left = `${posX}px`; cursorOutline.style.top = `${posY}px`;
+            cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 500, fill: "forwards" });
+        });
+        document.querySelectorAll('a, button, .project-card').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursorOutline.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                cursorOutline.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursorOutline.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursorOutline.style.backgroundColor = 'transparent';
+            });
+        });
 
-        // --- Efek Ketik untuk Subtitle --- (tidak berubah)
-        const roles = ["Creative Technologist", "Web Developer", "Network Enthusiast", "UI/UX Designer"];
-        let roleIndex = 0;
-        let charIndex = 0;
-        const subtitleElement = document.getElementById('subtitle-text');
-
-        function type() {
-            if (charIndex < roles[roleIndex].length) {
-                subtitleElement.textContent += roles[roleIndex].charAt(charIndex);
-                charIndex++;
-                setTimeout(type, 100);
-            } else {
-                setTimeout(erase, 2000);
-            }
+        // === TYPEWRITER ===
+        const roles = ["Informatics Student", "Web Developer", "Creative Technologist"];
+        let roleIndex = 0; let charIndex = 0; let isDeleting = false;
+        const typeTarget = document.getElementById('typewriter');
+        function typeEffect() {
+            const currentRole = roles[roleIndex];
+            if (isDeleting) { typeTarget.textContent = currentRole.substring(0, charIndex - 1); charIndex--; } 
+            else { typeTarget.textContent = currentRole.substring(0, charIndex + 1); charIndex++; }
+            let typeSpeed = isDeleting ? 50 : 100;
+            if (!isDeleting && charIndex === currentRole.length) { typeSpeed = 2000; isDeleting = true; } 
+            else if (isDeleting && charIndex === 0) { isDeleting = false; roleIndex = (roleIndex + 1) % roles.length; typeSpeed = 500; }
+            setTimeout(typeEffect, typeSpeed);
         }
+        typeEffect();
 
-        function erase() {
-            if (charIndex > 0) {
-                subtitleElement.textContent = roles[roleIndex].substring(0, charIndex - 1);
-                charIndex--;
-                setTimeout(erase, 50);
-            } else {
-                roleIndex = (roleIndex + 1) % roles.length;
-                setTimeout(type, 500);
-            }
-        }
-        if (subtitleElement) {
-            subtitleElement.textContent = "";
-            setTimeout(type, 500);
-        }
+        // === MOBILE MENU & SCROLL ===
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        hamburger.addEventListener('click', () => { navLinks.classList.toggle('active'); });
 
-        // --- Filter Proyek --- (tidak berubah)
-        const filterButtons = document.querySelectorAll('.filter-btn');
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOnScroll = () => {
+            const windowHeight = window.innerHeight; const elementVisible = 100;
+            revealElements.forEach((el) => {
+                const elementTop = el.getBoundingClientRect().top;
+                if (elementTop < windowHeight - elementVisible) { el.style.opacity = "1"; el.style.transform = "translateY(0)"; }
+            });
+        };
+        revealElements.forEach(el => { el.style.opacity = "0"; el.style.transform = "translateY(30px)"; el.style.transition = "all 0.8s ease"; });
+        window.addEventListener('scroll', revealOnScroll);
+        
+        // === FILTER ===
+        const filterBtns = document.querySelectorAll('.filter-btn');
         const projectCards = document.querySelectorAll('.project-card');
-
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                const filter = button.getAttribute('data-filter');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active')); btn.classList.add('active');
+                const filterValue = btn.getAttribute('data-filter');
                 projectCards.forEach(card => {
-                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                    card.style.transform = 'scale(0.9)';
-                    card.style.opacity = '0';
-                    card.style.display = 'none';
-                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
-                        setTimeout(() => {
-                           card.style.display = 'block';
-                           setTimeout(() => {
-                             card.style.transform = 'scale(1)';
-                             card.style.opacity = '1';
-                           }, 50)
-                        }, 100);
+                    if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                        card.style.display = 'flex';
+                        setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'scale(1)'; }, 50);
+                    } else {
+                        card.style.opacity = '0'; card.style.transform = 'scale(0.8)';
+                        setTimeout(() => { card.style.display = 'none'; }, 300);
                     }
                 });
             });
         });
-
-        // --- Menu Mobile (Hamburger) --- (tidak berubah)
-        const hamburger = document.querySelector('.hamburger');
-        const navLinks = document.querySelector('.nav-links');
-        const navLinkItems = document.querySelectorAll('.nav-links a');
-
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
-        
-        navLinkItems.forEach(link => {
-            link.addEventListener('click', () => {
-                if (navLinks.classList.contains('active')) {
-                    hamburger.classList.remove('active');
-                    navLinks.classList.remove('active');
-                }
-            });
-        });
-        
-        // --- Animasi Reveal saat Scroll --- (tidak berubah)
-        const revealElements = document.querySelectorAll('.reveal');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1 });
-        revealElements.forEach(el => observer.observe(el));
-        
-        // --- Scrollspy untuk Navigasi --- (tidak berubah)
-        const sections = document.querySelectorAll('section');
-        const navLi = document.querySelectorAll('.nav-links li a');
-
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 150) {
-                    current = section.getAttribute('id');
-                }
-            });
-            navLi.forEach(a => {
-                a.classList.remove('active');
-                if (a.getAttribute('href') == '#' + current) {
-                    a.classList.add('active');
-                }
-            });
-        });
-
-        // =======================================================
-        // --- Kursor Kustom (SELALU AKTIF, TANPA PENGECUALIAN) ---
-        // =======================================================
-        const cursor = document.querySelector('.cursor');
-        const interactiveElements = document.querySelectorAll('a, button, .skill-card, .project-card');
-
-        // Selalu jalankan event listener untuk menggerakkan kursor
-        document.addEventListener('mousemove', e => {
-            // Gunakan clientX/clientY untuk posisi relatif terhadap viewport, lebih akurat untuk `position:fixed`
-            cursor.style.top = e.clientY + 'px';
-            cursor.style.left = e.clientX + 'px';
-        });
-
-        // Selalu jalankan event listener untuk interaksi
-        interactiveElements.forEach(el => {
-            el.addEventListener('mouseover', () => cursor.classList.add('grow'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
-        });
-        // Tidak ada lagi pengecekan `isTouchDevice`
-
-    });
     </script>
 </body>
 </html>
